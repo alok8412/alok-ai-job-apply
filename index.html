@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#111827">
+  <title>ALOK AI — Job Apply Assistant</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark">A</div><div><strong>ALOK AI</strong><small>JOB APPLY ASSISTANT</small></div></div>
+      <div class="side-label">WORKSPACE</div>
+      <nav>
+        <button class="nav-item active" data-view="dashboard"><span>▦</span> Dashboard</button>
+        <button class="nav-item" data-view="jobs"><span>⌕</span> Job Matches</button>
+        <button class="nav-item" data-view="applications"><span>▤</span> Applications</button>
+        <button class="nav-item" data-view="profile"><span>♙</span> Resume & Profile</button>
+        <button class="nav-item" data-view="settings"><span>⚙</span> Preferences</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="privacy-note"><span class="green-dot"></span><div><b>Your approval stays in control</b><small>Applications are never submitted silently.</small></div></div>
+        <small class="muted">ALOK AI · Local prototype</small>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div><div class="eyebrow" id="eyebrow">YOUR JOB SEARCH</div><h1 id="page-title">Dashboard</h1></div>
+        <div class="top-actions"><span class="date-pill" id="today"></span><button class="btn btn-primary" id="quick-add">＋ Add job</button></div>
+      </header>
+
+      <section class="view active" id="view-dashboard">
+        <div class="welcome-card">
+          <div><div class="eyebrow light">YOUR NEXT OPPORTUNITY STARTS HERE</div><h2>Stay focused. Apply smarter.</h2><p>Track relevant MIS, Power BI and Administration Manager opportunities in Faridabad.</p><button class="btn btn-light" data-go="jobs">View job matches <span>→</span></button></div>
+          <div class="welcome-art"><div class="orb orb1"></div><div class="orb orb2"></div><div class="paper"><div class="paper-line w80"></div><div class="paper-line w55"></div><div class="paper-check">✓</div><div class="paper-line w70"></div><div class="paper-line w45"></div></div></div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-top"><span>Total tracked</span><span class="stat-icon blue">▤</span></div><strong id="stat-total">0</strong><small>Jobs in your pipeline</small></div>
+          <div class="stat-card"><div class="stat-top"><span>Ready to review</span><span class="stat-icon purple">⌕</span></div><strong id="stat-matched">0</strong><small>Match your saved criteria</small></div>
+          <div class="stat-card"><div class="stat-top"><span>Applications sent</span><span class="stat-icon green">✓</span></div><strong id="stat-applied">0</strong><small>Submission recorded</small></div>
+          <div class="stat-card"><div class="stat-top"><span>Interviews</span><span class="stat-icon orange">♧</span></div><strong id="stat-interviews">0</strong><small>Interview stage</small></div>
+        </div>
+        <div class="content-grid">
+          <div class="panel"><div class="panel-head"><div><h3>Application activity</h3><p>Your progress against the daily target</p></div><span class="target-tag">Target: <b id="target-label">25</b> / day</span></div><div class="progress-wrap"><div class="progress-meta"><b id="today-count">0 applications today</b><span id="progress-percent">0%</span></div><div class="progress-track"><div id="progress-bar"></div></div><small class="muted">Only applications you mark as submitted count toward this target.</small></div><div class="activity-foot"><div><b id="remaining">25</b><small>to daily target</small></div><div><b id="week-count">0</b><small>tracked this week</small></div><div><b id="response-count">0%</b><small>interview rate</small></div></div></div>
+          <div class="panel"><div class="panel-head"><div><h3>Search profile</h3><p>Current matching preferences</p></div><button class="text-btn" data-go="settings">Edit</button></div><div class="criteria-list" id="criteria-summary"></div></div>
+        </div>
+        <div class="panel"><div class="panel-head"><div><h3>Recent opportunities</h3><p>Latest jobs added to your pipeline</p></div><button class="text-btn" data-go="jobs">View all →</button></div><div id="recent-jobs"></div></div>
+      </section>
+
+      <section class="view" id="view-jobs">
+        <div class="toolbar"><div class="searchbox"><span>⌕</span><input id="job-search" placeholder="Search title, company, skill or location"></div><select id="job-status-filter"><option value="all">All jobs</option><option value="matched">Matching criteria</option><option value="unreviewed">Not reviewed</option></select><button class="btn btn-primary" id="import-csv">Import CSV</button><input type="file" id="csv-file" accept=".csv,text/csv" hidden></div>
+        <div class="notice"><b>How job matching works:</b> Jobs are scored against your saved location, salary, experience and role preferences. Search sources and application links must be verified before you apply.</div>
+        <div id="jobs-list" class="job-list"></div>
+        <div class="empty-state hidden" id="jobs-empty"><div>⌕</div><h3>No jobs found</h3><p>Add a job manually or import a CSV from a job source.</p><button class="btn btn-primary" id="empty-add">＋ Add job</button></div>
+      </section>
+
+      <section class="view" id="view-applications">
+        <div class="toolbar"><div class="searchbox"><span>⌕</span><input id="application-search" placeholder="Search applications"></div><select id="application-filter"><option value="all">All statuses</option><option>Saved</option><option>Ready to apply</option><option>Applied</option><option>Interview</option><option>Rejected</option><option>Offer</option><option>Not suitable</option></select><button class="btn btn-outline" id="export-csv">↓ Export CSV</button></div>
+        <div class="panel table-panel"><div class="table-wrap"><table><thead><tr><th>JOB / COMPANY</th><th>LOCATION</th><th>SALARY</th><th>STATUS</th><th>UPDATED</th><th></th></tr></thead><tbody id="application-rows"></tbody></table></div><div class="empty-state hidden" id="applications-empty"><h3>No applications yet</h3><p>Save jobs and update their status as you progress.</p></div></div>
+      </section>
+
+      <section class="view" id="view-profile">
+        <div class="profile-layout">
+          <div class="panel"><div class="panel-head"><div><h3>Candidate profile</h3><p>Details used to prepare application forms</p></div></div><form id="profile-form" class="form-grid">
+            <label>Full name<input name="name" placeholder="Enter your full name"></label>
+            <label>Email address<input name="email" type="email" placeholder="you@example.com"></label>
+            <label>Phone number<input name="phone" placeholder="+91"></label>
+            <label>Current location<input name="location" placeholder="Faridabad, Haryana"></label>
+            <label class="span-2">Resume / CV <input type="file" id="resume-file" accept=".pdf,.doc,.docx"></label>
+            <div class="resume-status span-2" id="resume-status">No resume attached. Add a file to keep it available in this browser session.</div>
+            <label class="span-2">Key skills<textarea name="skills" rows="3" placeholder="MIS Reporting, Advanced Excel, Power BI, SQL, Dashboard Automation..."></textarea></label>
+            <label class="span-2">Professional summary<textarea name="summary" rows="4" placeholder="Briefly describe your experience and achievements"></textarea></label>
+            <div class="span-2 form-actions"><button class="btn btn-primary" type="submit">Save profile</button><span class="muted" id="profile-saved"></span></div>
+          </form></div>
+          <div class="panel tips-panel"><h3>Resume checklist</h3><p>Improve your match quality before applying.</p><ul><li>Use a clear PDF resume filename.</li><li>Include measurable MIS / reporting achievements.</li><li>List Power BI, Excel, SQL and automation skills you genuinely have.</li><li>Keep employment dates and contact details consistent.</li></ul><div class="privacy-box">🔒 Resume details are stored in this browser only in this prototype. Do not use a shared computer.</div></div>
+        </div>
+      </section>
+
+      <section class="view" id="view-settings">
+        <div class="panel settings-panel"><div class="panel-head"><div><h3>Job search preferences</h3><p>Set the rules used to score job matches.</p></div></div><form id="settings-form" class="form-grid">
+          <label>Preferred location<input name="location" value="Faridabad, Haryana"></label>
+          <label>Nearby locations<input name="nearby" value="Ballabhgarh, IMT Faridabad"></label>
+          <label>Minimum monthly salary (₹)<input name="salaryMin" type="number" min="0" value="35000"></label>
+          <label>Preferred salary maximum (₹)<input name="salaryMax" type="number" min="0" value="45000"></label>
+          <label>Minimum experience (years)<input name="expMin" type="number" min="0" value="5"></label>
+          <label>Maximum experience (years)<input name="expMax" type="number" min="0" value="10"></label>
+          <label class="span-2">Target designations<input name="roles" value="MIS Manager, Administration Manager, MIS & Administration Manager, Power BI Analyst"></label>
+          <label>Daily application target<input name="dailyTarget" type="number" min="1" max="100" value="25"></label>
+          <label>Joining availability<select name="joining"><option>Immediate</option><option>Within 15 days</option><option>Within 30 days</option></select></label>
+          <div class="span-2"><div class="check-row"><input type="checkbox" name="excludeBelow" checked id="exclude-below"><label for="exclude-below">Exclude jobs below minimum salary</label></div><div class="check-row"><input type="checkbox" name="requireVerified" checked id="require-verified"><label for="require-verified">Prioritize verified company / application links</label></div></div>
+          <div class="span-2 form-actions"><button class="btn btn-primary" type="submit">Save preferences</button><span class="muted" id="settings-saved"></span></div>
+        </form></div>
+        <div class="panel"><h3>Application safety</h3><p class="muted">This tool prepares and tracks applications. It does not bypass CAPTCHAs, login protections, paywalls, platform restrictions or anti-bot controls. Use official APIs or permitted site workflows only. Review every application and submit it yourself unless a platform explicitly authorizes automated submission.</p></div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="job-dialog" class="modal"><form id="job-form" method="dialog"><div class="modal-head"><div><div class="eyebrow">OPPORTUNITY PIPELINE</div><h2 id="dialog-title">Add a job</h2></div><button class="icon-btn" type="button" id="close-dialog">×</button></div><input type="hidden" name="id"><div class="form-grid">
+    <label class="span-2">Job title *<input name="title" required placeholder="MIS Manager"></label>
+    <label>Company *<input name="company" required placeholder="Company name"></label><label>Location<input name="location" placeholder="Faridabad"></label>
+    <label>Monthly salary (₹)<input name="salary" type="number" min="0" placeholder="35000"></label><label>Experience required (years)<input name="experience" type="number" min="0" placeholder="5"></label>
+    <label>Source<select name="source"><option>Naukri</option><option>LinkedIn</option><option>Indeed</option><option>Foundit</option><option>Company website</option><option>Recruiter / referral</option><option>Other</option></select></label>
+    <label>Application URL<input name="url" type="url" placeholder="https://..."></label>
+    <label class="span-2">Job description / notes<textarea name="description" rows="3" placeholder="Paste key responsibilities and requirements"></textarea></label>
+    <label>Status<select name="status"><option>Saved</option><option>Ready to apply</option><option>Applied</option><option>Interview</option><option>Rejected</option><option>Offer</option><option>Not suitable</option></select></label>
+  </div><div class="modal-actions"><button class="btn btn-outline" type="button" id="cancel-dialog">Cancel</button><button class="btn btn-primary" type="submit">Save job</button></div></form></dialog>
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
